@@ -8,6 +8,8 @@
 
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 #define MOUSE 5
+#define WINDOWS_MODE 10
+#define WINDOWS_NAV 11
 
 &mt {
     flavor = "balanced";
@@ -20,6 +22,16 @@
 };
 
 / {
+    // The navigation overrides only activate while Windows mode and layer 3 are active.
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        windows_navigation {
+            if-layers = <3 WINDOWS_MODE>;
+            then-layer = <WINDOWS_NAV>;
+        };
+    };
+
     combos {
         compatible = "zmk,combos";
 
@@ -176,8 +188,8 @@
         layer_3 {
             bindings = <
 &kp PAGE_UP  &trans    &kp UP_ARROW  &trans           &kp PAGE_DOWN                                     &trans  &trans              &kp LG(UP_ARROW)    &trans               &trans
-&kp HOME     &kp LEFT  &kp DOWN      &kp RIGHT_ARROW  &kp END                  &kp LC(LG(PRINTSCREEN))  &trans  &kp LG(LEFT_ARROW)  &kp LG(DOWN_ARROW)  &kp LG(RIGHT_ARROW)  &trans
-&trans       &trans    &trans        &trans           &trans         &trans    &kp LS(PRINTSCREEN)      &trans  &trans              &trans              &trans               &trans
+&kp HOME     &kp LEFT  &kp DOWN      &kp RIGHT_ARROW  &kp END                  &kp LG(LS(N4))  &trans  &kp LG(LEFT_ARROW)  &kp LG(DOWN_ARROW)  &kp LG(RIGHT_ARROW)  &trans
+&trans       &trans    &trans        &trans           &trans         &trans    &kp LG(LS(N3))      &trans  &trans              &trans              &trans               &trans
 &trans       &trans    &trans        &trans           &trans         &trans    &kp DEL                  &trans                                                               &trans
             >;
 
@@ -187,7 +199,7 @@
         layer_4 {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-&trans  &trans  &trans  &trans  &trans            &trans       &trans        &trans        &trans        &trans        &trans
+&tog WINDOWS_MODE  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &bootloader  &trans        &trans        &trans        &trans        &bt BT_CLR
 &trans  &trans  &trans  &trans  &trans  &trans    &trans       &trans                                                  &bt BT_CLR_ALL
             >;
@@ -241,6 +253,28 @@
 &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                          &trans
+            >;
+        };
+
+        // Toggle with layer 4 (hold LANG2) + A. This layer never changes Shift,
+        // letters, trackball controls, or access to the existing layer keys.
+        windows_mode {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &kp LEFT_WIN  &kp LCTRL  &trans  &trans  &trans  &lt 3 LANG1  &trans  &trans  &trans
+            >;
+        };
+
+        // Only active when both windows_mode and layer_3 are active.
+        // Keeps the navigation layer's Mac-style movements on Windows.
+        windows_nav {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LC(HOME)  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &kp LG(LS(S))  &trans  &kp HOME  &kp LC(END)  &kp END  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &kp LG(PRINTSCREEN)  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
     };
