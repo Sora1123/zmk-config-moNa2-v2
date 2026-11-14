@@ -41,6 +41,27 @@ mona2_r.overlay
 
 ```
 
+## Trackball gestures and symbol keys
+
+**[View the complete trackball guide: activation keys, direction maps, scrolling, and button bindings](docs/TRACKBALL_GESTURES.md)**
+
+Hold these base-layout keys while moving the trackball:
+
+| Hold | Layer | Left | Right | Up | Down |
+| --- | --- | --- | --- | --- | --- |
+| **`-`** | 7 | Ctrl+Shift+Tab | Ctrl+Tab | Ctrl+T | Ctrl+W |
+| **`O` + `P`** | 8 | Win+Ctrl+Left | Win+Ctrl+Right | Win+Tab | Win+Ctrl+Shift+Right |
+| **`L` + `-`** | 9 | Left Arrow | Win+T | Ctrl+L | Win+S |
+
+**These are literal shortcuts, not automatically OS-translated effects.**
+Hold `P` alone for trackball scrolling (layer 6), or hold `LANG1` for
+the alternate scrolling mode (layer 3). Details and tap-versus-hold
+behavior are in the guide.
+
+Hold **Space** for layer 2: the `;` position now sends `*`
+(`&kp ASTRK`), and the `"` position sends `/` (`&kp SLASH`).
+No Windows Alt-numpad macros remain.
+
 ## macOS / Windows compatibility mode
 
 This configuration defaults to its original macOS-oriented layout. It also includes a
@@ -80,8 +101,9 @@ and Bluetooth key positions stay unchanged.
 | Selection screenshot | Command+Shift+4 | Windows+Shift+S |
 | Full screenshot | Command+Shift+3 | Windows+PrintScreen |
 
-The existing tab/scroll and mouse gestures are preserved. Note that some gestures
-and the Alt-numpad character macros were already Windows-specific and remain as-is.
+Existing gestures are preserved; some send Windows-oriented shortcuts in both modes.
+The former Alt-code macros have been replaced with ordinary `*` and `/` keypresses.
+See the [trackball gesture cheat sheet](docs/TRACKBALL_GESTURES.md).
 
 **Implementation:** `windows_mode` is layer 10 (transparent except the two
 modifier positions and the `LANG1` layer-tap); `windows_nav` is layer 11 and
