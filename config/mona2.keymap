@@ -5,11 +5,21 @@
 #include "gesture/gesture_L7.dtsi"
 #include "gesture/gesture_L8.dtsi"
 #include "gesture/gesture_L9.dtsi"
+#include "gesture/gesture_L12.dtsi"
+#include "gesture/gesture_L13.dtsi"
 
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 #define MOUSE 5
 #define WINDOWS_MODE 10
 #define WINDOWS_NAV 11
+#define GESTURE_HISTORY 12
+#define GESTURE_DIA 13
+#define WINDOWS_TABS 14
+#define WINDOWS_DESKTOPS 15
+#define WINDOWS_WINDOWS 16
+#define WINDOWS_HISTORY 17
+#define WINDOWS_DIA 18
+#define WINDOWS_MOUSE 19
 
 &mt {
     flavor = "balanced";
@@ -30,19 +40,57 @@
             if-layers = <3 WINDOWS_MODE>;
             then-layer = <WINDOWS_NAV>;
         };
+
+        windows_tabs {
+            if-layers = <7 WINDOWS_MODE>;
+            then-layer = <WINDOWS_TABS>;
+        };
+
+        windows_desktops {
+            if-layers = <8 WINDOWS_MODE>;
+            then-layer = <WINDOWS_DESKTOPS>;
+        };
+
+        windows_windows {
+            if-layers = <9 WINDOWS_MODE>;
+            then-layer = <WINDOWS_WINDOWS>;
+        };
+
+        windows_history {
+            if-layers = <GESTURE_HISTORY WINDOWS_MODE>;
+            then-layer = <WINDOWS_HISTORY>;
+        };
+
+        windows_dia {
+            if-layers = <GESTURE_DIA WINDOWS_MODE>;
+            then-layer = <WINDOWS_DIA>;
+        };
+
+        windows_mouse {
+            if-layers = <MOUSE WINDOWS_MODE>;
+            then-layer = <WINDOWS_MOUSE>;
+        };
     };
 
     combos {
         compatible = "zmk,combos";
 
         Gesture_L8 {
+            bindings = <&lt 8 LG(TAB)>;
+            key-positions = <8 9>;
+            layers = <0 MOUSE>;
+        };
+
+        Gesture_L8_Windows {
             bindings = <&lt 8 LA(TAB)>;
             key-positions = <8 9>;
+            layers = <WINDOWS_MODE WINDOWS_MOUSE>;
         };
 
         Gesture_L9 {
             bindings = <&lt 9 LEFT_WIN>;
             key-positions = <19 20>;
+            layers = <0 MOUSE WINDOWS_MODE WINDOWS_MOUSE>;
         };
 
         a {
@@ -126,9 +174,9 @@
         default_layer {
             bindings = <
 &kp Q                             &kp W         &kp E         &kp R        &kp T                                                     &kp Y        &kp U  &kp I      &kp O    &lt 6 P
-&kp A                             &kp S         &kp D         &kp F        &kp G                                  &kp SEMICOLON      &kp H        &kp J  &kp K      &kp L    &lt 7 MINUS
-&mt_exit_AML_on_tap LEFT_SHIFT Z  &kp X         &kp C         &kp V        &kp B        &lt 5 TAB                 &kp DOUBLE_QUOTES  &kp N        &kp M  &kp COMMA  &kp DOT  &mt RIGHT_SHIFT SLASH
-&kp LCTRL                         &kp LEFT_WIN  &kp LEFT_ALT  &lt 4 LANG2  &lt 2 SPACE  &lt_to_layer_0 3 LANG1    &kp BACKSPACE      &lt 1 ENTER                             &lt 5 ESCAPE
+&kp A                             &kp S         &kp D         &kp F        &kp G                                  &lt GESTURE_HISTORY SEMICOLON  &kp H        &kp J  &kp K      &kp L    &lt 7 COLON
+&mt_exit_AML_on_tap LEFT_SHIFT Z  &kp X         &kp C         &kp V        &kp B        &lt 5 TAB                 &lt GESTURE_DIA DOUBLE_QUOTES  &kp N        &kp M  &kp COMMA  &kp DOT  &mt RIGHT_SHIFT SLASH
+&kp LCTRL                         &kp LEFT_ALT  &kp LEFT_WIN  &lt 4 LANG2  &lt 2 SPACE  &lt_to_layer_0 3 LANG1    &kp BACKSPACE      &lt 1 ENTER                             &lt 5 ESCAPE
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -181,7 +229,7 @@
         MOUSE {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans            &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
+&trans  &trans  &kp LG(LC(D))  &trans  &trans            &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &mkp MB4  &trans    &mkp MB5  &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                                &trans
             >;
@@ -234,7 +282,7 @@
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                &kp LEFT_WIN  &kp LCTRL  &trans  &trans  &trans  &lt 3 LANG1  &trans  &trans  &trans
+                &kp LEFT_WIN  &trans  &kp LCTRL  &trans  &trans  &lt 3 LANG1  &trans  &trans  &trans
             >;
         };
 
@@ -245,6 +293,78 @@
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LC(HOME)  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &kp LG(LS(S))  &trans  &kp HOME  &kp LC(END)  &kp END  &trans
                 &trans  &trans  &trans  &trans  &trans  &trans  &kp LG(PRINTSCREEN)  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        gesture_history {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        gesture_dia {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        windows_tabs {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        windows_desktops {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        windows_windows {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        windows_history {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        windows_dia {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        windows_mouse {
+            bindings = <
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &kp D  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
                 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
