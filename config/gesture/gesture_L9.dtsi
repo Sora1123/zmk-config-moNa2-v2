@@ -1,16 +1,31 @@
 / {
-  zip_mouse_gesture_l9: zip_mouse_gesture_l9 {
-    compatible = "zmk,input-processor-mouse-gesture";
-    #input-processor-cells = <0>;  
-    enable-eager-mode;
-    stroke-size = <5>;
-    movement-threshold = <6>;
-    idle-timeout-ms = <100>;
-    gesture-cooldown-ms = <120>;
+    zip_mouse_gesture_l9: zip_mouse_gesture_l9 {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <5>;
+        movement-threshold = <6>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <120>;
 
-    focus_url        { pattern = <GESTURE_UP>;  bindings = <&kp LC(L)>;      };
-    vdesk_send_next  { pattern = <GESTURE_DOWN>; bindings = <&kp LG(S)>;     };
-    taskbar_prev     { pattern = <GESTURE_LEFT>;    bindings = <&kp LEFT>;   };
-    taskbar_next     { pattern = <GESTURE_RIGHT>;  bindings = <&kp LG(T)>;   };
-  };
+        left_half { pattern = <GESTURE_LEFT>; bindings = <&kp LC(LA(LG(DOT)))>; };
+        right_half { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LA(LG(SLASH)))>; };
+        next_display { pattern = <GESTURE_UP>; bindings = <&kp LC(LA(LG(UP)))>; };
+        fill_display { pattern = <GESTURE_DOWN>; bindings = <&kp LC(LA(LG(COMMA)))>; };
+    };
+
+    zip_mouse_gesture_l9_win: zip_mouse_gesture_l9_win {
+        compatible = "zmk,input-processor-mouse-gesture";
+        #input-processor-cells = <0>;
+        enable-eager-mode;
+        stroke-size = <5>;
+        movement-threshold = <6>;
+        idle-timeout-ms = <100>;
+        gesture-cooldown-ms = <120>;
+
+        left_half { pattern = <GESTURE_LEFT>; bindings = <&kp LG(LEFT)>; };
+        right_half { pattern = <GESTURE_RIGHT>; bindings = <&kp LG(RIGHT)>; };
+        next_display { pattern = <GESTURE_UP>; bindings = <&kp LG(LS(RIGHT))>; };
+        fill_display { pattern = <GESTURE_DOWN>; bindings = <&kp LG(UP)>; };
+    };
 };
